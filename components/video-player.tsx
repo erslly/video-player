@@ -77,7 +77,7 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
   }
 
   const handleSeek = (value: number[]) => {
-    if (videoRef.current) {
+    if (videoRef.current && duration > 0) {
       const newTime = (value[0] / 100) * duration
       videoRef.current.currentTime = newTime
       setCurrentTime(newTime)
@@ -165,11 +165,16 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
     if (!video) return
 
     const onTimeUpdate = () => {
-      setCurrentTime(video.currentTime)
+      if (video && !isNaN(video.currentTime)) {
+        setCurrentTime(video.currentTime);
+      }
     }
 
     const onLoadedMetadata = () => {
-      setDuration(video.duration)
+      if (video && !isNaN(video.duration)) {
+        setDuration(video.duration);
+        console.log("Video duration:", video.duration);
+      }
     }
 
     const onPlay = () => {
@@ -207,6 +212,10 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
     video.addEventListener("waiting", onWaiting)
     video.addEventListener("playing", onPlaying)
     document.addEventListener("fullscreenchange", onFullscreenChange)
+
+    if (video.readyState >= 1) {
+      onLoadedMetadata();
+    }
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (document.activeElement?.tagName === "INPUT") return
@@ -278,6 +287,10 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
     }
   }, [isPlaying, duration])
 
+  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+  
+  console.log("currentTime:", currentTime, "duration:", duration, "progress:", progress);
+
   return (
     <div
       ref={videoContainerRef}
@@ -340,7 +353,7 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
             </div>
           </div>
           <Slider
-            value={[currentTime ? (currentTime / duration) * 100 : 0]}
+            value={[progress]}
             onValueChange={handleSeek}
             max={100}
             step={0.1}

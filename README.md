@@ -108,22 +108,7 @@ Video oynatıcı, birkaç mobil özelliği içerir:
 
 - **Kaydırma Hareketleri**: Video içinde ilerlemek için yatay, ses seviyesini ayarlamak için dikey kaydırma
 - **Çift Dokunma**: Geri/ileri atlamak için ekranın sol/sağ tarafına çift dokunma
-- **Mobil Optimizasyonlu Kontroller**: Daha büyük dokunma hedefleri ve küçük ekranlarda basitleştirilmiş arayüz
 - **Tam Ekran Yönlendirmesi**: Tam ekranda otomatik olarak yatay moda geçer (desteklenen cihazlarda)
-
-
-## ⌨️ Klavye Kısayolları
-
-| Tuş | İşlem
-|-----|-----|-----
-| Boşluk / K | Oynat/Duraklat
-| M | Sesi Kapat/Aç
-| F | Tam Ekran Geçiş
-| I | Resim İçinde Resim Geçiş
-| T | Tiyatro Modu Geçiş
-| Sağ Ok | 10 Saniye İleri
-| Sol Ok | 10 Saniye Geri
-| 0-9 | Videonun %0-%90'ına Atla
 
 
 ## 🤝 Katkıda Bulunma

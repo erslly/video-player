@@ -2,12 +2,6 @@
 
 Next.js ve React ile oluşturulmuş modern, özellik açısından zengin bir video oynatıcı. Bu oynatıcı, gelişmiş kontrollerle duyarlı tasarım, mobil dokunmatik desteği ve şık bir kullanıcı arayüzü sunar.
 
-[![GitHub stars](https://img.shields.io/github/stars/erslly/video-player?style=social)](https://github.com/erslly/video-player/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/erslly/video-player?style=social)](https://github.com/erslly/video-player/network/members)
-[![GitHub issues](https://img.shields.io/github/issues/erslly/video-player)](https://github.com/erslly/video-player/issues)
-[![GitHub license](https://img.shields.io/github/license/erslly/video-player)](https://github.com/erslly/video-player/blob/main/LICENSE)
-
-
 ## ✨ Özellikler
 
 - **Duyarlı Tasarım**: Masaüstü ve mobil cihazlarda sorunsuz çalışır
@@ -38,34 +32,29 @@ Next.js ve React ile oluşturulmuş modern, özellik açısından zengin bir vid
    ```bash
    git clone https://github.com/erslly/video-player.git
    cd video-player
-```markdown project="Video Player" file="README.md"
+   ```
 
 2. Bağımlılıkları yükleyin:
-
-```shellscript
-npm install
-# veya
-yarn install
-```
-
+   ```bash
+   npm install
+   # veya
+   yarn install
+   ```
 
 3. Geliştirme sunucusunu çalıştırın:
-
-```shellscript
-npm run dev
-# veya
-yarn dev
-```
-
+   ```bash
+   npm run dev
+   # veya
+   yarn dev
+   ```
 
 4. Sonucu görmek için tarayıcınızda [http://localhost:3000](http://localhost:3000) adresini açın.
-
 
 ## 📖 Kullanım
 
 ### Temel Uygulama
 
-```javascriptreact
+```jsx
 import VideoPlayer from "../components/video-player";
 
 export default function Home() {
@@ -83,12 +72,19 @@ export default function Home() {
 
 ### Özellikler (Props)
 
-| Özellik | Tür | Açıklama
-|-----|-----|-----
-| `src` | string | Video dosyasının URL'si (gerekli)
-| `poster` | string | Küçük resim görüntüsünün URL'si (isteğe bağlı)
-| `title` | string | Videonun başlığı (isteğe bağlı)
+| Özellik | Tür | Açıklama |
+|---------|-----|----------|
+| `src` | string | Video dosyasının URL'si (gerekli) |
+| `poster` | string | Küçük resim görüntüsünün URL'si (isteğe bağlı) |
+| `title` | string | Videonun başlığı (isteğe bağlı) |
 
+## 📱 Mobil Özellikler
+
+Video oynatıcı, çeşitli mobil özellikleri içerir:
+
+- **Kaydırma Hareketleri**: Video içinde ilerlemek için yatay, ses seviyesini ayarlamak için dikey kaydırma
+- **Çift Dokunma**: Geri/ileri atlamak için ekranın sol/sağ tarafına çift dokunma
+- **Tam Ekran Yönlendirmesi**: Tam ekranda otomatik olarak yatay moda geçer (desteklenen cihazlarda)
 
 ## 🛠️ Kullanılan Teknolojiler
 
@@ -98,16 +94,6 @@ export default function Home() {
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [Lucide React](https://lucide.dev/) - Güzel ve tutarlı simge araç seti
 - [shadcn/ui](https://ui.shadcn.com/) - Radix UI ve Tailwind CSS ile oluşturulmuş yeniden kullanılabilir bileşenler
-
-
-## 📱 Mobil Özellikler
-
-Video oynatıcı, birkaç mobil özelliği içerir:
-
-- **Kaydırma Hareketleri**: Video içinde ilerlemek için yatay, ses seviyesini ayarlamak için dikey kaydırma
-- **Çift Dokunma**: Geri/ileri atlamak için ekranın sol/sağ tarafına çift dokunma
-- **Tam Ekran Yönlendirmesi**: Tam ekranda otomatik olarak yatay moda geçer (desteklenen cihazlarda)
-
 
 ## 🤝 Katkıda Bulunma
 
@@ -119,16 +105,12 @@ Katkılarınızı bekliyoruz! Lütfen bir Pull Request göndermekten çekinmeyin
 4. Dalınıza push edin (`git push origin feature/amazing-feature`)
 5. Bir Pull Request açın
 
-
-
 ## 🙏 Teşekkürler
 
 - [HTML5 Video API](https://developer.mozilla.org/en-US/docs/Web/API/HTMLVideoElement)
 - [Next.js Dokümantasyonu](https://nextjs.org/docs)
 - [Tailwind CSS Dokümantasyonu](https://tailwindcss.com/docs)
 
-
 ---
 
 [erslly](https://github.com/erslly) tarafından ❤️ ile yapılmıştır
-

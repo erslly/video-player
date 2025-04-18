@@ -38,3 +38,114 @@ Next.js ve React ile oluşturulmuş modern, özellik açısından zengin bir vid
    ```bash
    git clone https://github.com/erslly/video-player.git
    cd video-player
+```markdown project="Video Player" file="README.md"
+...
+```
+
+2. Bağımlılıkları yükleyin:
+
+```shellscript
+npm install
+# veya
+yarn install
+```
+
+
+3. Geliştirme sunucusunu çalıştırın:
+
+```shellscript
+npm run dev
+# veya
+yarn dev
+```
+
+
+4. Sonucu görmek için tarayıcınızda [http://localhost:3000](http://localhost:3000) adresini açın.
+
+
+## 📖 Kullanım
+
+### Temel Uygulama
+
+```javascriptreact
+import VideoPlayer from "../components/video-player";
+
+export default function Home() {
+  return (
+    <div className="container mx-auto p-4">
+      <VideoPlayer
+        src="https://example.com/video.mp4"
+        poster="/thumbnail.jpg"
+        title="Developed By erslly"
+      />
+    </div>
+  );
+}
+```
+
+### Özellikler (Props)
+
+| Özellik | Tür | Açıklama
+|-----|-----|-----
+| `src` | string | Video dosyasının URL'si (gerekli)
+| `poster` | string | Küçük resim görüntüsünün URL'si (isteğe bağlı)
+| `title` | string | Videonun başlığı (isteğe bağlı)
+
+
+## 🛠️ Kullanılan Teknolojiler
+
+- [Next.js](https://nextjs.org/) - React framework
+- [React](https://reactjs.org/) - Kullanıcı arayüzleri oluşturmak için JavaScript kütüphanesi
+- [TypeScript](https://www.typescriptlang.org/) - Tipli JavaScript
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Lucide React](https://lucide.dev/) - Güzel ve tutarlı simge araç seti
+- [shadcn/ui](https://ui.shadcn.com/) - Radix UI ve Tailwind CSS ile oluşturulmuş yeniden kullanılabilir bileşenler
+
+
+## 📱 Mobil Özellikler
+
+Video oynatıcı, birkaç mobil özelliği içerir:
+
+- **Kaydırma Hareketleri**: Video içinde ilerlemek için yatay, ses seviyesini ayarlamak için dikey kaydırma
+- **Çift Dokunma**: Geri/ileri atlamak için ekranın sol/sağ tarafına çift dokunma
+- **Mobil Optimizasyonlu Kontroller**: Daha büyük dokunma hedefleri ve küçük ekranlarda basitleştirilmiş arayüz
+- **Tam Ekran Yönlendirmesi**: Tam ekranda otomatik olarak yatay moda geçer (desteklenen cihazlarda)
+
+
+## ⌨️ Klavye Kısayolları
+
+| Tuş | İşlem
+|-----|-----|-----
+| Boşluk / K | Oynat/Duraklat
+| M | Sesi Kapat/Aç
+| F | Tam Ekran Geçiş
+| I | Resim İçinde Resim Geçiş
+| T | Tiyatro Modu Geçiş
+| Sağ Ok | 10 Saniye İleri
+| Sol Ok | 10 Saniye Geri
+| 0-9 | Videonun %0-%90'ına Atla
+
+
+## 🤝 Katkıda Bulunma
+
+Katkılarınızı bekliyoruz! Lütfen bir Pull Request göndermekten çekinmeyin.
+
+1. Projeyi fork edin
+2. Özellik dalınızı oluşturun (`git checkout -b feature/amazing-feature`)
+3. Değişikliklerinizi commit edin (`git commit -m 'Harika bir özellik ekle'`)
+4. Dalınıza push edin (`git push origin feature/amazing-feature`)
+5. Bir Pull Request açın
+
+
+
+## 🙏 Teşekkürler
+
+- [HTML5 Video API](https://developer.mozilla.org/en-US/docs/Web/API/HTMLVideoElement)
+- [Next.js Dokümantasyonu](https://nextjs.org/docs)
+- [Tailwind CSS Dokümantasyonu](https://tailwindcss.com/docs)
+
+
+---
+
+[erslly](https://github.com/erslly) tarafından ❤️ ile yapılmıştır
+

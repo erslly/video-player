@@ -113,7 +113,6 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
     setQuality(newQuality)
   }
 
-  // Auto-hide controls
   const resetControlsTimeout = () => {
     if (controlsTimeoutRef.current) {
       clearTimeout(controlsTimeoutRef.current)

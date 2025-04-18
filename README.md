@@ -39,7 +39,6 @@ Next.js ve React ile oluşturulmuş modern, özellik açısından zengin bir vid
    git clone https://github.com/erslly/video-player.git
    cd video-player
 ```markdown project="Video Player" file="README.md"
-```
 
 2. Bağımlılıkları yükleyin:
 

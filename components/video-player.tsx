@@ -35,8 +35,22 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
     { time: 120, title: "Bölüm 2" },
     { time: 240, title: "Bölüm 3" },
   ])
+  const [isMobile, setIsMobile] = useState(false)
 
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile)
+    }
+  }, [])
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60)
@@ -288,8 +302,6 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
   }, [isPlaying, duration])
 
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
-  
-  console.log("currentTime:", currentTime, "duration:", duration, "progress:", progress);
 
   return (
     <div
@@ -297,6 +309,8 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
       className="relative w-full bg-black rounded-lg overflow-hidden group"
       onMouseMove={resetControlsTimeout}
       onMouseLeave={() => isPlaying && setShowControls(false)}
+      onTouchStart={resetControlsTimeout}
+      onTouchEnd={() => setTimeout(() => isPlaying && setShowControls(false), 3000)}
     >
       <video
         ref={videoRef}
@@ -305,37 +319,38 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
         className="w-full aspect-video"
         onClick={togglePlay}
         onDoubleClick={toggleFullScreen}
+        playsInline
       />
 
       {!isPlaying && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/30">
           <button
             onClick={togglePlay}
-            className="w-20 h-20 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition-transform hover:scale-110"
+            className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition-transform hover:scale-110"
           >
-            <Play className="w-10 h-10 text-white fill-white" />
+            <Play className="w-8 h-8 md:w-10 md:h-10 text-white fill-white" />
           </button>
         </div>
       )}
 
       {isBuffering && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-          <div className="w-16 h-16 border-4 border-t-primary border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+          <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-t-primary border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
         </div>
       )}
 
       <div
         className={cn(
-          "absolute top-0 left-0 right-0 p-4 bg-gradient-to-b from-black/70 to-transparent transition-opacity duration-300",
+          "absolute top-0 left-0 right-0 p-2 md:p-4 bg-gradient-to-b from-black/70 to-transparent transition-opacity duration-300",
           showControls ? "opacity-100" : "opacity-0",
         )}
       >
-        <h2 className="text-white font-medium text-lg">{title}</h2>
+        <h2 className="text-white font-medium text-base md:text-lg truncate">{title}</h2>
       </div>
 
       <div
         className={cn(
-          "absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 transition-opacity duration-300",
+          "absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2 md:p-4 transition-opacity duration-300",
           showControls ? "opacity-100" : "opacity-0",
         )}
       >
@@ -357,40 +372,40 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
             onValueChange={handleSeek}
             max={100}
             step={0.1}
-            className="cursor-pointer [&>span:first-child]:h-1.5 [&>span:first-child]:bg-white/30 [&_[role=slider]]:bg-primary [&_[role=slider]]:w-4 [&_[role=slider]]:h-4 [&_[role=slider]]:border-2 [&_[role=slider]]:border-white [&>span:first-child_span]:bg-primary"
+            className="cursor-pointer [&>span:first-child]:h-1.5 [&>span:first-child]:bg-white/30 [&_[role=slider]]:bg-primary [&_[role=slider]]:w-3 [&_[role=slider]]:h-3 md:[&_[role=slider]]:w-4 md:[&_[role=slider]]:h-4 [&_[role=slider]]:border-2 [&_[role=slider]]:border-white [&>span:first-child_span]:bg-primary"
           />
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 md:gap-2">
           <button onClick={togglePlay} className="text-white hover:text-primary transition-colors">
-            {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
+            {isPlaying ? <Pause className="w-5 h-5 md:w-6 md:h-6" /> : <Play className="w-5 h-5 md:w-6 md:h-6" />}
           </button>
 
           <button onClick={() => skip(-10)} className="text-white hover:text-primary transition-colors">
-            <SkipBack className="w-5 h-5" />
+            <SkipBack className="w-4 h-4 md:w-5 md:h-5" />
           </button>
 
           <button onClick={() => skip(10)} className="text-white hover:text-primary transition-colors">
-            <SkipForward className="w-5 h-5" />
+            <SkipForward className="w-4 h-4 md:w-5 md:h-5" />
           </button>
 
           <div className="relative flex items-center ml-1 group">
             <button onClick={toggleMute} className="text-white hover:text-primary transition-colors">
-              {isMuted || volume === 0 ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
+              {isMuted || volume === 0 ? <VolumeX className="w-5 h-5 md:w-6 md:h-6" /> : <Volume2 className="w-5 h-5 md:w-6 md:h-6" />}
             </button>
 
-            <div className="w-20 ml-2">
+            <div className={cn("w-16 md:w-20 ml-2 hidden group-hover:block", isMobile ? "absolute bottom-8 left-0" : "")}>
               <Slider
                 value={[isMuted ? 0 : volume * 100]}
                 onValueChange={(value) => handleVolumeChange([value[0] / 100])}
                 max={100}
                 step={1}
-                className="cursor-pointer [&>span:first-child]:h-1 [&>span:first-child]:bg-white/30 [&_[role=slider]]:bg-primary [&_[role=slider]]:w-3 [&_[role=slider]]:h-3 [&>span:first-child_span]:bg-primary"
+                className="cursor-pointer [&>span:first-child]:h-1 [&>span:first-child]:bg-white/30 [&_[role=slider]]:bg-primary [&_[role=slider]]:w-2 [&_[role=slider]]:h-2 md:[&_[role=slider]]:w-3 md:[&_[role=slider]]:h-3 [&_[role=slider]]:border-2 [&_[role=slider]]:border-white [&>span:first-child_span]:bg-primary"
               />
             </div>
           </div>
 
-          <div className="text-white text-sm ml-2">
+          <div className="text-white text-xs md:text-sm ml-1 md:ml-2">
             {formatTime(currentTime)} / {formatTime(duration)}
           </div>
 
@@ -398,7 +413,7 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="text-white hover:text-primary transition-colors bg-gray-800/50 px-2 py-1 rounded text-sm font-medium">
+              <button className="text-white hover:text-primary transition-colors bg-gray-800/50 px-1 py-0.5 md:px-2 md:py-1 rounded text-xs md:text-sm font-medium">
                 {playbackSpeed}x
               </button>
             </DropdownMenuTrigger>
@@ -408,29 +423,29 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
                   key={speed}
                   onClick={() => changePlaybackSpeed(speed)}
                   className={cn(
-                    "flex items-center gap-2 cursor-pointer hover:bg-gray-800",
+                    "flex items-center gap-2 cursor-pointer hover:bg-gray-800 text-xs md:text-sm",
                     playbackSpeed === speed && "text-primary",
                   )}
                 >
-                  {playbackSpeed === speed && <Check className="w-4 h-4" />}
+                  {playbackSpeed === speed && <Check className="w-3 h-3 md:w-4 md:h-4" />}
                   {speed}x
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <button onClick={toggleTheaterMode} className="text-white hover:text-primary transition-colors ml-2">
-            <MonitorUp className="w-5 h-5" />
+          <button onClick={toggleTheaterMode} className={cn("text-white hover:text-primary transition-colors ml-1 md:ml-2", isMobile ? "" : "hidden md:block")}>
+            <MonitorUp className="w-4 h-4 md:w-5 md:h-5" />
           </button>
 
-          <button onClick={togglePictureInPicture} className="text-white hover:text-primary transition-colors ml-2">
-            <PictureInPicture className="w-5 h-5" />
+          <button onClick={togglePictureInPicture} className={cn("text-white hover:text-primary transition-colors ml-1 md:ml-2", isMobile ? "" : "hidden md:block")}>
+            <PictureInPicture className="w-4 h-4 md:w-5 md:h-5" />
           </button>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="text-white hover:text-primary transition-colors ml-2">
-                <Bookmark className="w-5 h-5" />
+              <button className={cn("text-white hover:text-primary transition-colors ml-1 md:ml-2", isMobile ? "" : "hidden md:block")}>
+                <Bookmark className="w-4 h-4 md:w-5 md:h-5" />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="bg-gray-900/90 text-white border-gray-700">
@@ -438,7 +453,7 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
                 <DropdownMenuItem
                   key={chapter.time}
                   onClick={() => jumpToChapter(chapter.time)}
-                  className="flex items-center gap-2 cursor-pointer hover:bg-gray-800"
+                  className="flex items-center gap-2 cursor-pointer hover:bg-gray-800 text-xs md:text-sm"
                 >
                   {chapter.title} ({formatTime(chapter.time)})
                 </DropdownMenuItem>
@@ -448,15 +463,15 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
 
           <button
             onClick={() => setShowKeyboardShortcuts(!showKeyboardShortcuts)}
-            className="text-white hover:text-primary transition-colors ml-2"
+            className={cn("text-white hover:text-primary transition-colors ml-1 md:ml-2", isMobile ? "" : "hidden md:block")}
           >
-            <Keyboard className="w-5 h-5" />
+            <Keyboard className="w-4 h-4 md:w-5 md:h-5" />
           </button>
 
           <DropdownMenu onOpenChange={setIsSettingsOpen}>
             <DropdownMenuTrigger asChild>
-              <button className="text-white hover:text-primary transition-colors ml-2">
-                <Settings className={cn("w-5 h-5", isSettingsOpen && "text-primary")} />
+              <button className="text-white hover:text-primary transition-colors ml-1 md:ml-2">
+                <Settings className={cn("w-4 h-4 md:w-5 md:h-5", isSettingsOpen && "text-primary")} />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="bg-gray-900/90 text-white border-gray-700">
@@ -465,33 +480,33 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
                   key={q}
                   onClick={() => changeQuality(q)}
                   className={cn(
-                    "flex items-center gap-2 cursor-pointer hover:bg-gray-800",
+                    "flex items-center gap-2 cursor-pointer hover:bg-gray-800 text-xs md:text-sm",
                     quality === q && "text-primary",
                   )}
                 >
-                  {quality === q && <Check className="w-4 h-4" />}
+                  {quality === q && <Check className="w-3 h-3 md:w-4 md:h-4" />}
                   {q}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <button onClick={toggleFullScreen} className="text-white hover:text-primary transition-colors ml-2">
-            {isFullScreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
+          <button onClick={toggleFullScreen} className="text-white hover:text-primary transition-colors ml-1 md:ml-2">
+            {isFullScreen ? <Minimize className="w-4 h-4 md:w-5 md:h-5" /> : <Maximize className="w-4 h-4 md:w-5 md:h-5" />}
           </button>
         </div>
       </div>
 
       {showKeyboardShortcuts && (
         <div className="absolute inset-0 bg-black/80 flex items-center justify-center z-10 p-4">
-          <div className="bg-gray-900 rounded-lg p-6 max-w-md w-full">
+          <div className="bg-gray-900 rounded-lg p-4 md:p-6 max-w-md w-full">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-white text-lg font-bold">Klavye Kısayolları</h3>
+              <h3 className="text-white text-base md:text-lg font-bold">Klavye Kısayolları</h3>
               <button onClick={() => setShowKeyboardShortcuts(false)} className="text-white hover:text-primary">
                 ✕
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-2 text-sm">
+            <div className="grid grid-cols-2 gap-2 text-xs md:text-sm">
               <div className="text-gray-400">Boşluk / K</div>
               <div className="text-white">Oynat/Duraklat</div>
 
@@ -520,5 +535,4 @@ export default function VideoPlayer({ src, poster, title = "Video" }: VideoPlaye
         </div>
       )}
     </div>
-  )
-}
+  )}
